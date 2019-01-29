@@ -12,7 +12,11 @@ sets = [0] * MOVES
 for j in range(len(ACTIONS) * MOVES):
     res = START
     for action in map(lambda x: ACTIONS[x], sets):
-        res = action(res)
+        try:
+            res = action(res)
+        except Exception:
+            pass
+
     if res == GOAL:
         break
     sets = shift(sets)
