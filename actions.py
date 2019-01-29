@@ -2,50 +2,42 @@ from functools import wraps
 
 
 def annotation(func):
-    @wraps(func)
-    def _(*args, **kwargs):
-        _.__doc__ = func.__name__.upper() + (" WITH " + str(args)[1:-2]
-                                             if args else "")
-        return func(*args, **kwargs)
-    return _
+    def dec(*args, **kwargs):
+        @wraps(func)
+        def _(res: int):
+            _.__doc__ = func.__name__.upper() + (" WITH " + str(args)[1:-2]
+                                                 if args else "")
+            return func(res, *args, **kwargs)
+        return _
+    return dec
 
 
 @annotation
-def concat(num: int) -> int:
-    @wraps(concat)
-    def _(res: int) -> int:
-        return int(f"{res}{num}")
-    return _
+def concat(res: int,  num: int) -> int:
+    return int(f"{res}{num}")
 
 
 @annotation
-def addition(num: int) -> int:
-    @wraps(addition)
-    def _(res: int) -> int:
-        return res + num
-    return _
+def addition(res: int,  num: int) -> int:
+    return res + num
 
 
 @annotation
-def division(num: int) -> int:
-    @wraps(division)
-    def _(res: int) -> int:
-        return res // num
-    return _
+def division(res: int,  num: int) -> int:
+    return res // num
 
 
 @annotation
-def multiplication(num: int) -> int:
-    @wraps(multiplication)
-    def _(res: int) -> int:
-        return res * num
-    return _
+def multiplication(res: int,  num: int) -> int:
+    return res * num
 
 
 @annotation
-def reverse() -> int:
-    @wraps(reverse)
-    def _(res: int) -> int:
-        return int(''.join(reversed(str(res))))
-    return _
+def replace(res: int, old: int, new: int) -> int:
+    return int(str(res).replace(str(old), str(new)))
+
+
+@annotation
+def reverse(res: int) -> int:
+    return int(''.join(reversed(str(res))))
 
