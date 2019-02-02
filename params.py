@@ -110,5 +110,9 @@ def level_13():
     ]
 
 
+if "level_" + str(current_level) not in dir():
+    current_level = int((
+        max(filter(lambda x: x.startswith('level_'), dir()), key=lambda x: int(x.split('_', 1)[1]))).split("_", 1)[1]
+    )
 
 eval(f"level_{current_level}()")

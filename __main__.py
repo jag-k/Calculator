@@ -1,4 +1,5 @@
 from params import *
+print("Current Level: ", current_level)
 
 
 def shift(args):
@@ -26,7 +27,7 @@ for j in range(len(ACTIONS) ** MOVES):
         continue
 
     if res == GOAL:
-        print("SOLUTION FOUND!")
+        print("\nSOLUTION FOUND!", end='')
         break
     sets = shift(sets)
 
