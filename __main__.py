@@ -9,16 +9,25 @@ def shift(args):
 
 
 sets = [0] * MOVES
-for j in range(len(ACTIONS) * MOVES):
+for j in range(len(ACTIONS) ** MOVES):
     res = START
+    error = False
+
     for action in map(lambda x: ACTIONS[x], sets):
         try:
             res = action(res)
         except Exception:
-            pass
+            error = True
+            break
+
+    # print(j, sets, res)
+    if error:
+        sets = shift(sets)
+        continue
 
     if res == GOAL:
+        print("SOLUTION FOUND!")
         break
     sets = shift(sets)
 
-print(*map(lambda x: ACTIONS[x].__doc__, sets), sep="\n")
+print("\x1b[32m", *map(lambda x: ACTIONS[x].__doc__, sets), sep="\x1b[0m\n\x1b[32m", end="\x1b[0m")

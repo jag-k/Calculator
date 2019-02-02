@@ -4,10 +4,10 @@ from functools import wraps
 def annotation(func):
     def dec(*args, **kwargs):
         @wraps(func)
-        def _(res: int):
+        def _(res: float):
             _.__doc__ = func.__name__.upper() + (" WITH " + str(args)[1:-2]
                                                  if args else "")
-            return int(func(res, *args, **kwargs))
+            return float(func(res, *args, **kwargs))
 
         return _
 
@@ -15,35 +15,35 @@ def annotation(func):
 
 
 @annotation
-def concat(res: int, num: int):
+def concat(res: float, num: float):
     return f"{res}{num}"
 
 
 @annotation
-def addition(res: int, num: int):
+def addition(res: float, num: float):
     return res + num
 
 
 @annotation
-def division(res: int, num: int):
-    return res // num
+def division(res: float, num: float):
+    return res / num
 
 
 @annotation
-def multiplication(res: int, num: int):
+def multiplication(res: float, num: float):
     return res * num
 
 
 @annotation
-def replace(res: int, old: int, new: int):
+def replace(res: float, old: int, new: int):
     return str(res).replace(str(old), str(new))
 
 
 @annotation
-def reverse(res: int):
+def reverse(res: float):
     return int(''.join(reversed(str(res))))
 
 
 @annotation
-def delete(res: int):
-    return str(res)[:-1]
+def delete(res: float):
+    return str(int(res))[:-1]
